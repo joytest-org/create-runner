@@ -1,0 +1,29 @@
+{
+  "name": "@anio-jtest/create-runner",
+  "version": "0.0.1",
+  "description": "Create anio-jtest runner (browser or node).",
+  "author": "Anio Software <info@anio.software>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anio-jtest/create-runner.git"
+  },
+  "exports": {
+    ".": "./dist/package.mjs",
+    "./package.json": "./package.json"
+  },
+  "devDependencies": {
+    "@anio-js-core-foundation/create-promise": "^1.0.1",
+    "@anio-js-core-foundation/create-random-identifier": "^1.0.1",
+    "@anio-js-foundation/bundle-package": "^3.1.2",
+    "@anio-js-foundation/create-remote-worker": "^0.7.1",
+    "@anio-js-foundation/create-temporary-resource": "^0.3.1",
+    "@anio-js-foundation/create-worker": "^0.11.0"
+  },
+  "scripts": {
+    "prepare": "./prepare.sh"
+  },
+  "files": [
+    "./dist/package.mjs"
+  ]
+}

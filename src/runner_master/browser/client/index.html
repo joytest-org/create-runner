@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>jtest-browser-runner</title>
+</head>
+<body>
+
+	<style>
+		* {
+			box-sizing: border-box;
+			padding: 0;
+			margin: 0;
+		}
+
+		.log-outer span.green {
+			color: #9BC38F;
+		}
+
+		html, body {
+			width: 100%;
+			height: 100%;
+			background: #0A0B10;
+		}
+
+		#app {
+			padding: 30px;
+		}
+
+		.log-outer {
+			margin-top: 10px;
+			width: 100%;
+			height: 400px;
+			font-size: 10px;
+			background: #03030A;
+			line-height: 18px;
+			padding: 10px 20px;
+			border: 1px solid #1E1E24;
+			border-radius: 4px;
+		}
+
+		.log-outer span {
+			color: rgba(255,255,255,.3);
+		}
+
+		.log-outer span.highlight {
+			color: white;
+		}
+
+		.log {
+			font-family: monospace;
+			width: 100%;
+			height: 100%;
+			overflow-y: scroll;
+			display: flex;
+			flex-direction: column;
+		}
+	</style>
+
+	<div id="app">
+		<button id="start">Start</button>
+
+		<div class="log-outer"><div class="log"></div></div>
+	</div>
+
+	<script type="module" src="/index.mjs"></script>
+
+</body>
+</html>
