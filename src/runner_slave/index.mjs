@@ -35,7 +35,7 @@ async function loadTestSuite(url) {
 
 	return (await import(
 		// path.resolve turns "/bla/bla/" "/test" into "/test" and not "/bla/bla/test"
-		path.join(context.jtest_session.project_root, url)
+		path.join(context.jtest_session.options.project_root, url)
 	)).default
 }
 

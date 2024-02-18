@@ -10,7 +10,7 @@ export default function(context, request, response) {
 
 	if (request.url.startsWith("/project_files/")) {
 		let file = fs.readFileSync(
-			path.join(jtest_session.project_root, request.url.slice(
+			path.join(jtest_session.options.project_root, request.url.slice(
 				"/project_files/".length
 			))
 		)
