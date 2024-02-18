@@ -17,9 +17,12 @@ async function init(context) {
 async function createWorker(context) {
 	const {jtest_session, sendRequest} = context
 
+	const node_binary = "node_binary" in context.options ? context.options.node_binary : "node"
+
 	const worker = await createNodeWorker.fromCode(
 		runner_slave_code, ["node", jtest_session], "AnioJTestWorkerMain", {
-			silent: false
+			silent: false,
+			node_binary
 		}
 	)
 
