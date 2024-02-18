@@ -13,7 +13,6 @@ async function init(context) {
 	return {}
 }
 
-
 async function createWorker(context) {
 	const {jtest_session, sendRequest} = context
 
