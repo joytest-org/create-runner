@@ -33,8 +33,6 @@ async function createWorker(context) {
 		}
 	}
 
-	worker._setDebuggingMode(true)
-
 	global_workers.set(worker.connection_id, worker)
 
 	return worker.connection_id
