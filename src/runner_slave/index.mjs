@@ -6,7 +6,9 @@ let context = {
 
 // environment can either be 'browser' or 'node'
 export async function AnioJTestWorkerMain(environment, jtest_session = null) {
-	if (jtest_session === null) {
+	if (!["node", "browser"].includes(environment)) {
+		throw new Error(`Invalid environment "${environment}".`)
+	} else if (jtest_session === null) {
 		throw new Error(`AnioJTestWorkerMain: jtest_session cannot be null and must be supplied.`)
 	}
 
