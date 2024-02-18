@@ -37,6 +37,8 @@ export default async function createRunner(type, options) {
 		}
 	}
 
+	instance.public_interface.id = runner_master.connection_id
+
 	instance.public_interface.init = async function init(jtest_session) {
 		return await runner_master.sendRequest({
 			cmd: "init",
