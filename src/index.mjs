@@ -46,6 +46,10 @@ export default async function createRunner(type, options) {
 		return await instance.ready_promise.promise
 	}
 
+	instance.public_interface.terminate = async function terminate() {
+		runner_master.terminate()
+	}
+
 	instance.public_interface.createWorker = async function createWorker() {
 		if (!instance.is_ready) {
 			throw new Error(`Cannot create worker when we're not ready!`)
