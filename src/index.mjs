@@ -40,10 +40,20 @@ export default async function createRunner(type, options) {
 	instance.public_interface.id = runner_master.connection_id
 
 	instance.public_interface.init = async function init(jtest_session) {
-		return await runner_master.sendRequest({
+		let new_props = await runner_master.sendRequest({
 			cmd: "init",
 			jtest_session
 		})
+
+		for (const key in new_props) {
+			if (key in instance.public_interface) {
+				throw new Error(`Cannot set property '${key}' because it is already set. This is a bug.`)
+			}
+
+			instance.public_interface[key] = new_props[key]
+		}
+
+		return new_props
 	}
 
 	instance.public_interface.ready = async function ready() {
