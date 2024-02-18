@@ -3,6 +3,8 @@ import runner_slave_code from "includeStaticResource:../../runner_slave/index.mj
 
 let global_workers = new Map()
 
+let node_binary = "node"
+
 async function init(context) {
 	const {sendRequest} = context
 
@@ -10,13 +12,17 @@ async function init(context) {
 		sendRequest({cmd: "ready"})
 	}, 0)
 
-	return {}
+	if ("node_binary" in context.options) {
+		node_binary = context.options["node_binary"]
+	}
+
+	return {
+		node_binary
+	}
 }
 
 async function createWorker(context) {
 	const {jtest_session, sendRequest} = context
-
-	const node_binary = "node_binary" in context.options ? context.options.node_binary : "node"
 
 	const worker = await createNodeWorker.fromCode(
 		runner_slave_code, ["node", jtest_session], "AnioJTestWorkerMain", {
