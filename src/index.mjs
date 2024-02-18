@@ -13,7 +13,9 @@ export default async function createRunner(type, options) {
 		ready_promise: createPromise(),
 		test_results: new Map(),
 
-		public_interface: {}
+		public_interface: {
+			type
+		}
 	}
 
 	const runner_master = await createWorker.fromCode(runner_master_code, [
