@@ -15,7 +15,7 @@ export default async function createRunner(type, options) {
 	let instance = {
 		is_ready: false,
 		ready_promise: createPromise(),
-		test_results: new Map(),
+		pending_tests: new Map(),
 
 		public_interface: {
 			type
@@ -35,7 +35,7 @@ export default async function createRunner(type, options) {
 		} else if (request.cmd === "reportTestResult") {
 			const {result_id, result} = request.report
 
-			instance.test_results.get(result_id).resolve(result)
+			instance.pending_tests.get(result_id).resolve(result)
 		} else {
 			/* unknown request */
 		}
@@ -86,7 +86,7 @@ export default async function createRunner(type, options) {
 
 				const result_id = createRandomIdentifier(8)
 
-				instance.test_results.set(result_id, createPromise())
+				instance.pending_tests.set(result_id, createPromise())
 
 				// test result will be delivered asynchronously
 				await runner_master.sendRequest({
@@ -97,7 +97,7 @@ export default async function createRunner(type, options) {
 					result_id
 				})
 
-				return await instance.test_results.get(result_id).promise
+				return await instance.pending_tests.get(result_id).promise
 			},
 
 			async terminate() {
