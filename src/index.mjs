@@ -8,6 +8,10 @@ import runner_master_code from "includeStaticResource:../dist/runner_master/inde
 	runner <- ipc -> runner_master <- | http | -> runner_slave [<-> worker]
 */
 export default async function createRunner(type, options) {
+	if (!["node", "browser"].includes(type)) {
+		throw new Error(`Invalid runner type "${type}".`)
+	}
+
 	let instance = {
 		is_ready: false,
 		ready_promise: createPromise(),
