@@ -109,5 +109,47 @@ export default async function createRunner(type, options) {
 		}
 	}
 
+	//
+	//
+	//
+	instance.public_interface.runTestUnitsFactory = function (test_units_collection) {
+		let ret = []
+
+		for (const test_units of test_units_collection) {
+			// make a copy of the units
+			// because the function will shift() tests from the units
+			// array, modifying the original array
+			const test_units_copy = JSON.parse(JSON.stringify(test_units))
+
+			ret.push(async () => {
+				// every unit is processed in its own worker
+				const worker = await instance.public_interface.createWorker()
+
+				let current_test
+				let test_results_map = new Map()
+
+				//
+				// process each test separately
+				// so we can assign the test result accordingly
+				//
+				while (current_test = test_units_copy.shift()) {
+					try {
+						const test_result = await worker.runTest(current_test.id, 2000)
+
+						test_results_map.set(current_test.id, test_result)
+					} catch (error) {
+						test_results_map.set(current_test.id, error)
+					}
+				}
+
+				await worker.terminate()
+
+				return test_results_map
+			})
+		}
+
+		return ret
+	}
+
 	return instance.public_interface
 }
