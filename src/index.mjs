@@ -112,7 +112,7 @@ export default async function createRunner(type, options) {
 	//
 	//
 	//
-	instance.public_interface.runTestUnitsFactory = function (test_units) {
+	instance.public_interface.runTestUnitsFactory = function (test_units, event_handler = () => {}) {
 		let ret = []
 
 		for (const test_unit of test_units) {
@@ -128,20 +128,27 @@ export default async function createRunner(type, options) {
 				let current_test
 				let test_results_map = new Map()
 
+				const setTestResult = (test_id, result) => {
+					test_results_map.set(test_id, result)
+					event_handler("test_result", {test_id, result})
+				}
+
 				//
 				// process each test separately
 				// so we can assign the test result accordingly
 				//
 				while (current_test = test_unit_copy.shift()) {
 					try {
+						event_handler("before_run", current_test.id)
 						const test_result = await worker.runTest(current_test.id, 2000)
+						event_handler("after_run", current_test.id)
 
-						test_results_map.set(current_test.id, {
+						setTestResult(current_test.id, {
 							has_error_occurred_during_testing: false,
 							test_result
 						})
 					} catch (error) {
-						test_results_map.set(current_test.id, {
+						setTestResult(current_test.id, {
 							has_error_occurred_during_testing: true,
 							error
 						})
