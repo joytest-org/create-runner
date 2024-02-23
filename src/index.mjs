@@ -17,6 +17,8 @@ export default async function createRunner(type, options) {
 		ready_promise: createPromise(),
 		pending_tests: new Map(),
 
+		jtest_session: null,
+
 		public_interface: {
 			type
 		}
@@ -67,6 +69,8 @@ export default async function createRunner(type, options) {
 
 			instance.public_interface[key] = new_props[key]
 		}
+
+		instance.jtest_session = jtest_session
 
 		return new_props
 	}
