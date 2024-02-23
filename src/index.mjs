@@ -142,32 +142,48 @@ export default async function createRunner(type, options) {
 
 				let current_test
 
-				// every unit is processed in its own worker
-				const worker = await instance.public_interface.createWorker()
-
 				//
-				// process each test separately
-				// so we can assign the test result accordingly
+				// .createWorker() can fail
+				// and we need to handle that case
 				//
-				while (current_test = test_unit_copy.shift()) {
-					try {
-						event_handler("before_run", current_test.id)
-						const test_result = await worker.runTest(current_test.id, 2000)
-						event_handler("after_run", current_test.id)
+				try {
+					// every unit is processed in its own worker
+					const worker = await instance.public_interface.createWorker()
 
-						setTestResult(current_test.id, {
-							has_error_occurred_during_testing: false,
-							test_result
-						})
-					} catch (error) {
+					//
+					// process each test separately
+					// so we can assign the test result accordingly
+					//
+					while (current_test = test_unit_copy.shift()) {
+						try {
+							event_handler("before_run", current_test.id)
+							const test_result = await worker.runTest(current_test.id, 2000)
+							event_handler("after_run", current_test.id)
+
+							setTestResult(current_test.id, {
+								has_error_occurred_during_testing: false,
+								test_result
+							})
+						} catch (error) {
+							setTestResult(current_test.id, {
+								has_error_occurred_during_testing: true,
+								error
+							})
+						}
+					}
+
+					await worker.terminate()
+				} catch (error) {
+					//
+					// mark all tests all failed
+					//
+					while (current_test = test_unit_copy.shift()) {
 						setTestResult(current_test.id, {
 							has_error_occurred_during_testing: true,
 							error
 						})
 					}
 				}
-
-				await worker.terminate()
 
 				return test_results_map
 			})
