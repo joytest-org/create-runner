@@ -41,13 +41,16 @@ export default async function createRunner(type, options) {
 				return
 			}
 
+			const {resolve, reject, timeout_timer} = instance.pending_tests.get(result_id)
+
+			if (timeout_timer !== null) {
+				clearTimeout(timeout_timer)
+			}
+
 			if (error === false) {
-				instance.pending_tests.get(result_id).resolve(result)
+				resolve(result)
 			} else {
-				instance.pending_tests.get(result_id).reject(
-					// result contains error message as a string
-					new Error(`${result}`)
-				)
+				reject(new Error(`${result}`))
 			}
 		} else {
 			/* unknown request */
@@ -100,7 +103,19 @@ export default async function createRunner(type, options) {
 
 				const result_id = createRandomIdentifier(8)
 
-				instance.pending_tests.set(result_id, createPromise())
+				let pending_test = createPromise()
+
+				pending_test.timeout_timer = null
+
+				instance.pending_tests.set(result_id, pending_test)
+
+				if (timeout > 0) {
+					pending_test.timeout_timer = setTimeout(() => {
+						instance.pending_tests.get(result_id).reject(
+							new Error(`Hard timeout of ${timeout + 50}ms reached.`)
+						)
+					}, timeout + 50)
+				}
 
 				// test result will be delivered asynchronously
 				runner_master.sendRequest({
