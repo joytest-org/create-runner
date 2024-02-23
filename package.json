@@ -1,6 +1,6 @@
 {
   "name": "@anio-jtest/create-runner",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Create anio-jtest runner (browser or node).",
   "author": "Anio Software <info@anio.software>",
   "license": "MIT",
