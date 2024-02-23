@@ -133,16 +133,17 @@ export default async function createRunner(type, options) {
 			const test_unit_copy = JSON.parse(JSON.stringify(test_unit))
 
 			ret.push(async () => {
-				// every unit is processed in its own worker
-				const worker = await instance.public_interface.createWorker()
-
-				let current_test
 				let test_results_map = new Map()
 
 				const setTestResult = (test_id, result) => {
 					test_results_map.set(test_id, result)
 					event_handler("test_result", {test_id, result})
 				}
+
+				let current_test
+
+				// every unit is processed in its own worker
+				const worker = await instance.public_interface.createWorker()
 
 				//
 				// process each test separately
