@@ -19,7 +19,7 @@
     "@anio-js-foundation/bundle-package": "^3.1.2",
     "@anio-js-foundation/create-remote-worker": "^0.7.1",
     "@anio-js-foundation/create-temporary-resource": "^0.3.1",
-    "@anio-js-foundation/create-worker": "^0.11.0"
+    "@anio-js-foundation/create-worker": "^0.11.1"
   },
   "scripts": {
     "prepare": "./prepare.sh"
