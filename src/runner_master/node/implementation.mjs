@@ -44,14 +44,11 @@ async function createWorker(context) {
 }
 
 async function runTestInWorker(context, worker_id, test) {
-	const {url, test_id, result_id} = test
 	const target_worker = global_workers.get(worker_id)
 
 	return await target_worker.sendRequest({
 		cmd: "runTest",
-		url,
-		test_id,
-		result_id
+		...test
 	})
 }
 
