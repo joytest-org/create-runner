@@ -88,7 +88,7 @@ export default async function createRunner(type, options) {
 			id: worker_id,
 
 			// todo: implement timeout
-			async runTest(test_id, timeout = 0) {
+			runTest(test_id, timeout = 0) {
 				const url = test_id.slice(0, test_id.lastIndexOf("#d"))
 
 				const result_id = createRandomIdentifier(8)
@@ -96,7 +96,7 @@ export default async function createRunner(type, options) {
 				instance.pending_tests.set(result_id, createPromise())
 
 				// test result will be delivered asynchronously
-				await runner_master.sendRequest({
+				runner_master.sendRequest({
 					cmd: "runner:worker:runTest",
 					worker_id,
 					url,
@@ -104,7 +104,7 @@ export default async function createRunner(type, options) {
 					result_id
 				})
 
-				return await instance.pending_tests.get(result_id).promise
+				return instance.pending_tests.get(result_id).promise
 			},
 
 			async terminate() {
