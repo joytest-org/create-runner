@@ -33,9 +33,16 @@ export default async function createRunner(type, options) {
 			instance.is_ready = true
 			instance.ready_promise.resolve()
 		} else if (request.cmd === "reportTestResult") {
-			const {result_id, result} = request.report
+			const {result_id, result, error} = request.report
 
-			instance.pending_tests.get(result_id).resolve(result)
+			if (error === false) {
+				instance.pending_tests.get(result_id).resolve(result)
+			} else {
+				instance.pending_tests.get(result_id).reject(
+					// result contains error message as a string
+					new Error(`${result}`)
+				)
+			}
 		} else {
 			/* unknown request */
 		}

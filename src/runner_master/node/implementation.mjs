@@ -1,5 +1,5 @@
 import {default as createNodeWorker} from "@anio-js-foundation/create-worker"
-import runner_slave_code from "includeStaticResource:../../runner_slave/index.mjs"
+import runner_slave_code from "includeStaticResource:../../../dist/runner_slave/index.mjs"
 
 let global_workers = new Map()
 

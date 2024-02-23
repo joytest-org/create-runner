@@ -1,3 +1,5 @@
+import errorObjectToString from "@anio-js-core-foundation/error-object-to-string"
+
 let context = {
 	jtest_session: null,
 	environment: null,
@@ -43,24 +45,21 @@ async function requestHandler(msg) {
 	if (msg.cmd === "runTest") {
 		const {url, test_id, result_id} = msg
 
-		const suite = await loadTestSuite(url)
-		const test = suite.findTestById(test_id)
+		setTimeout(async () => {
+			try {
+				const suite = await loadTestSuite(url)
+				const test = suite.findTestById(test_id)
 
-		// run test asynchronously
-		// so if test hangs
-		// this request ("runTest") does not timeout
-		setTimeout(() => {
-			test.run()
-			.then(result => {
+				const result = await test.run()
+
 				reportResult({
 					result_id, error: false, result
 				})
-			})
-			.catch(error => {
+			} catch (error) {
 				reportResult({
-					result_id, error: true, result: error
+					result_id, error: true, result: errorObjectToString(error)
 				})
-			})
+			}
 		}, 0)
 
 		return "dispatched"

@@ -3,7 +3,7 @@ import path from "node:path"
 
 import index_html_code from "includeStaticResource:./client/index.html"
 import index_js_code from "includeStaticResource:../../../dist/runner_master/browser/client/index.mjs"
-import runner_slave_code from "includeStaticResource:../../runner_slave/index.mjs"
+import runner_slave_code from "includeStaticResource:../../../dist/runner_slave/index.mjs"
 
 export default function(context, request, response) {
 	const {jtest_session} = context
