@@ -86,7 +86,7 @@ async function requestHandler(req) {
 
 		return `killed ${req.worker_id}`
 	} else if (req.cmd === "worker:runTest") {
-		const {worker_id, url, test_id, result_id} = req
+		const {worker_id, url, test_id, result_id, timeout} = req
 
 		let target_worker = global_worker[worker_id]
 
@@ -98,7 +98,8 @@ async function requestHandler(req) {
 			cmd: "runTest",
 			url,
 			test_id,
-			result_id
+			result_id,
+			timeout
 		})
 	} else {
 		/* invalid request */

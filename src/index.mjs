@@ -105,7 +105,8 @@ export default async function createRunner(type, options) {
 					worker_id,
 					url,
 					test_id,
-					result_id
+					result_id,
+					timeout
 				})
 
 				return instance.pending_tests.get(result_id).promise

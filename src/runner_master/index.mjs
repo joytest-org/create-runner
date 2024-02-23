@@ -34,10 +34,10 @@ async function requestHandler(req) {
 		return await context.implementation.createWorker(context)
 	}
 	else if (req.cmd === "runner:worker:runTest") {
-		const {worker_id, url, test_id, result_id} = req
+		const {worker_id, url, test_id, result_id, timeout} = req
 
 		return await context.implementation.runTestInWorker(context, worker_id, {
-			url, test_id, result_id
+			url, test_id, result_id, timeout
 		})
 	}
 	else if (req.cmd === "runner:terminateWorker") {

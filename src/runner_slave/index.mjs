@@ -43,14 +43,14 @@ async function loadTestSuite(url) {
 
 async function requestHandler(msg) {
 	if (msg.cmd === "runTest") {
-		const {url, test_id, result_id} = msg
+		const {url, test_id, result_id, timeout} = msg
 
 		setTimeout(async () => {
 			try {
 				const suite = await loadTestSuite(url)
 				const test = suite.findTestById(test_id)
 
-				const result = await test.run()
+				const result = await test.run(timeout)
 
 				reportResult({
 					result_id, error: false, result
