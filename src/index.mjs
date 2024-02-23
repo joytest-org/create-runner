@@ -124,7 +124,7 @@ export default async function createRunner(type, options) {
 	//
 	//
 	//
-	instance.public_interface.runTestUnitsFactory = function (test_units, event_handler = () => {}) {
+	instance.public_interface.runTestUnitsFactory = function (test_units, timeout_value = 0, event_handler = () => {}) {
 		let ret = []
 
 		for (const test_unit of test_units) {
@@ -158,7 +158,7 @@ export default async function createRunner(type, options) {
 					while (current_test = test_unit_copy.shift()) {
 						try {
 							event_handler("before_run", current_test.id)
-							const test_result = await worker.runTest(current_test.id, 2000)
+							const test_result = await worker.runTest(current_test.id, timeout_value)
 							event_handler("after_run", current_test.id)
 
 							setTestResult(current_test.id, {
