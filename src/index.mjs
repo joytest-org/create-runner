@@ -162,7 +162,7 @@ export default async function createRunner(type, options) {
 
 							setTestResult(current_test.id, {
 								has_error_occurred_during_testing: false,
-								test_result
+								...test_result
 							})
 						} catch (error) {
 							setTestResult(current_test.id, {
