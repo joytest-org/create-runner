@@ -35,6 +35,10 @@ export default async function createRunner(type, options) {
 		} else if (request.cmd === "reportTestResult") {
 			const {result_id, result, error} = request.report
 
+			if (!instance.pending_tests.has(result_id)) {
+				return
+			}
+
 			if (error === false) {
 				instance.pending_tests.get(result_id).resolve(result)
 			} else {
