@@ -91,7 +91,6 @@ export default async function createRunner(type, options) {
 		return {
 			id: worker_id,
 
-			// todo: implement timeout
 			runTest(test_id, timeout = 0) {
 				const url = test_id.slice(0, test_id.lastIndexOf("#d"))
 
