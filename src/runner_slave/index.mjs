@@ -50,7 +50,10 @@ async function requestHandler(msg) {
 				const suite = await loadTestSuite(url)
 				const test = suite.findTestById(test_id)
 
-				const result = await test.run(timeout)
+				const result = await test.run(timeout, {
+					environment,
+					jtest_session
+				})
 
 				reportResult({
 					result_id, error: false, result
