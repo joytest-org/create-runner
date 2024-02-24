@@ -51,8 +51,8 @@ async function requestHandler(msg) {
 				const test = suite.findTestById(test_id)
 
 				const result = await test.run(timeout, {
-					environment,
-					jtest_session
+					environment: context.environment,
+					jtest_session: context.jtest_session
 				})
 
 				reportResult({
