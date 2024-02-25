@@ -1,2 +1,4 @@
-# @anio-jtest/create-runner
+# @joytest/create-runner
 
+> [!CAUTION]
+> This is an internal package.

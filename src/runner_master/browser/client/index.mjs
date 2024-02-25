@@ -31,7 +31,7 @@ async function createWorker(jtest_session) {
 			importmap: {
 				imports: {
 					// todo: include importmap from jtest_session
-					"anio-jtest/suite": document.location.origin + "/project_files/node_modules/anio-jtest/dist/suite.mjs"
+					"joytest/suite": document.location.origin + "/project_files/node_modules/joytest/dist/suite.mjs"
 				}
 			}
 		}

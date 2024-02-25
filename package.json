@@ -1,12 +1,12 @@
 {
-  "name": "@anio-jtest/create-runner",
+  "name": "@joytest/create-runner",
   "version": "0.5.0",
-  "description": "Create anio-jtest runner (browser or node).",
+  "description": "Create joytest runner (browser or node).",
   "author": "Anio Software <info@anio.software>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/anio-jtest/create-runner.git"
+    "url": "git+https://github.com/joytest-org/create-runner.git"
   },
   "exports": {
     ".": "./dist/package.mjs",
