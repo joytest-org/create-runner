@@ -50,6 +50,16 @@ async function requestHandler(msg) {
 				const suite = await loadTestSuite(url)
 				const test = suite.findTestById(test_id)
 
+				if (test.skip) {
+					reportResult({
+						result_id, error: false, result: {
+							verdict: "skipped"
+						}
+					})
+
+					return
+				}
+
 				const result = await test.run(timeout, {
 					environment: context.environment,
 					jtest_session: context.jtest_session
