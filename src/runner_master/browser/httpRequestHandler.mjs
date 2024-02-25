@@ -19,17 +19,6 @@ export default function(context, request, response) {
 		response.write(file)
 		response.end()
 	}
-	else if (request.url.startsWith("/package_contents/")) {
-		let file = fs.readFileSync(
-			path.join(jtest_session.package_root, request.url.slice(
-				"/package_contents/".length
-			))
-		)
-
-		response.setHeader("Content-Type", "text/javascript")
-		response.write(file)
-		response.end()
-	}
 	else if (request.url === "/index.mjs") {
 		response.setHeader("Content-Type", "text/javascript")
 		response.write(index_js_code)
