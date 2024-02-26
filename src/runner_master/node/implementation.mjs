@@ -9,17 +9,31 @@ let node_binary = "node"
 async function init(context) {
 	const {sendRequest} = context
 
-	setTimeout(() => {
-		sendRequest({cmd: "ready"})
-	}, 0)
+	if ("version" in context.options) {
+		setTimeout(async () => {
+			node_binary = await getNodeBinaryPathWithTJsN(
+				context.jtest_session.cache_dir, context.options.version
+			)
+
+			// signal we are ready once the node binary
+			// is downloaded and ready
+			sendRequest({cmd: "ready"})
+		}, 0)
+
+		return {
+			version: context.options.version
+		}
+	}
 
 	if ("node_binary" in context.options) {
 		node_binary = context.options["node_binary"]
-	} else if ("version" in context.options) {
-		node_binary = await getNodeBinaryPathWithTJsN(
-			context.jtest_session.cache_dir, context.options.version
-		)
 	}
+
+	// nothing needs to be done if the node binary
+	// is already present on the system
+	setTimeout(() => {
+		sendRequest({cmd: "ready"})
+	}, 0)
 
 	return {
 		node_binary
