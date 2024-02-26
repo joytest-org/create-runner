@@ -12,6 +12,22 @@ let context = null
 // binary for 'node'
 //
 export async function RunnerMasterMain(type, options) {
+	// set the appopriate implementation
+	let implementation = ""
+
+	switch (type) {
+		case "browser":
+			implementation = browser_implementation
+		break
+
+		case "node":
+			implementation = node_implementation
+		break
+
+		default:
+			throw new Error(`No implementation for type '${type}'.`)
+	}
+
 	this.requestHandler = requestHandler
 
 	context = {
@@ -19,8 +35,7 @@ export async function RunnerMasterMain(type, options) {
 		options,
 		sendRequest: this.sendRequest,
 		jtest_session: null,
-		// set the appopriate implementation
-		implementation: type === "browser" ? browser_implementation : node_implementation
+		implementation
 	}
 }
 
