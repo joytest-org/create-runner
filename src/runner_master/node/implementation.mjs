@@ -1,5 +1,6 @@
 import {default as createNodeWorker} from "@anio-js-foundation/create-worker"
 import runner_slave_code from "includeStaticResource:../../../dist/runner_slave/index.mjs"
+import getNodeBinaryPathWithTJsN from "./getNodeBinaryPathWithTJsN.mjs"
 
 let global_workers = new Map()
 
@@ -14,6 +15,10 @@ async function init(context) {
 
 	if ("node_binary" in context.options) {
 		node_binary = context.options["node_binary"]
+	} else if ("version" in context.options) {
+		node_binary = await getNodeBinaryPathWithTJsN(
+			context.jtest_session.cache_dir, context.options.version
+		)
 	}
 
 	return {
