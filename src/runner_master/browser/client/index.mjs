@@ -1,4 +1,4 @@
-import {createClient} from "@anio-js-foundation/create-remote-worker"
+import {createClient} from "@anio-node-foundation/create-remote-worker"
 import {default as createWebWorker} from "@anio-js-foundation/create-worker"
 
 function logLineRaw(line, highlight = false) {

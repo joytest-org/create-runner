@@ -13,16 +13,16 @@
     "./package.json": "./package.json"
   },
   "devDependencies": {
-    "@anio-js-core-foundation/create-promise": "^1.0.1",
-    "@anio-js-core-foundation/create-random-identifier": "^1.0.1",
-    "@anio-js-core-foundation/error-object-to-string": "^1.0.0",
-    "@anio-js-foundation/bundle-package": "^3.1.2",
-    "@anio-js-foundation/create-remote-worker": "^0.7.1",
-    "@anio-js-foundation/create-temporary-resource": "^0.3.1",
-    "@anio-js-foundation/create-worker": "^0.12.1"
+    "@anio-js-foundation/create-promise": "^2.0.0",
+    "@anio-js-foundation/create-random-identifier": "^2.0.0",
+    "@anio-js-foundation/create-temporary-resource": "^1.0.0",
+    "@anio-js-foundation/create-worker": "^1.0.0",
+    "@anio-js-foundation/error-object-to-string": "^2.0.0",
+    "@anio-node-foundation/create-remote-worker": "^1.0.0",
+    "@anio-software/npm-package-bundler": "^1.0.0"
   },
   "scripts": {
-    "prepare": "./prepare.sh"
+    "prepare": "./node_modules/.bin/npm-package-bundler ."
   },
   "files": [
     "./dist/package.mjs"

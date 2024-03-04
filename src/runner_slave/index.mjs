@@ -1,4 +1,4 @@
-import errorObjectToString from "@anio-js-core-foundation/error-object-to-string"
+import errorObjectToString from "@anio-js-foundation/error-object-to-string"
 
 let context = {
 	jtest_session: null,

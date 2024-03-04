@@ -1,4 +1,4 @@
-import {createServer} from "@anio-js-foundation/create-remote-worker"
+import {createServer} from "@anio-node-foundation/create-remote-worker"
 import httpRequestHandler from "./httpRequestHandler.mjs"
 
 let runner_client_id = null, server = null

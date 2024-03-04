@@ -1,6 +1,6 @@
 import createWorker from "@anio-js-foundation/create-worker"
-import createPromise from "@anio-js-core-foundation/create-promise"
-import createRandomIdentifier from "@anio-js-core-foundation/create-random-identifier"
+import createPromise from "@anio-js-foundation/create-promise"
+import createRandomIdentifier from "@anio-js-foundation/create-random-identifier"
 
 import runner_master_code from "includeStaticResource:../dist/runner_master/index.mjs"
 
