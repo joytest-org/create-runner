@@ -7,12 +7,23 @@ import runner_master_code from "includeStaticResource:../dist/runner_master/inde
 /*
 	runner <- ipc -> runner_master <- | http | -> runner_slave [<-> worker]
 */
+function addDynamicProperties(instance, props) {
+	for (const key in props) {
+		if (key in instance.dynamic_properties) {
+			throw new Error(`Cannot set property '${key}' because it is already set. This is a bug.`)
+		}
+
+		instance.dynamic_properties[key] = props[key]
+	}
+}
+
 export default async function createRunner(type, options) {
 	if (!["node", "browser"].includes(type)) {
 		throw new Error(`Invalid runner type "${type}".`)
 	}
 
 	let instance = {
+		dynamic_properties: {},
 		is_ready: false,
 		ready_promise: createPromise(),
 		pending_tests: new Map(),
@@ -65,13 +76,7 @@ export default async function createRunner(type, options) {
 			jtest_session
 		})
 
-		for (const key in new_props) {
-			if (key in instance.public_interface) {
-				throw new Error(`Cannot set property '${key}' because it is already set. This is a bug.`)
-			}
-
-			instance.public_interface[key] = new_props[key]
-		}
+		addDynamicProperties(instance, new_props)
 
 		instance.jtest_session = jtest_session
 
@@ -209,6 +214,10 @@ export default async function createRunner(type, options) {
 		}
 
 		return ret
+	}
+
+	instance.public_interface.getDynamicProperties = function() {
+		return instance.dynamic_properties
 	}
 
 	return instance.public_interface
