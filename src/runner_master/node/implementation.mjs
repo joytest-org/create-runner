@@ -11,17 +11,22 @@ async function init(context) {
 
 	if ("version" in context.options) {
 		setTimeout(async () => {
-			node_binary = await getNodeBinaryPath(
+			const {binary, concrete_version} = await getNodeBinaryPath(
 				context.jtest_session.cache_dir, context.options.version
 			)
 
+			node_binary = binary
+
 			// signal we are ready once the node binary
 			// is downloaded and ready
-			sendRequest({cmd: "ready"})
+			sendRequest({cmd: "ready", dynamic_props: {
+				node_binary,
+				concrete_version
+			}})
 		}, 0)
 
 		return {
-			version: context.options.version
+			requested_version: context.options.version
 		}
 	}
 

@@ -55,5 +55,8 @@ export default async function(cache_dir, node_version) {
 	const available_versions = await updateLocalAvailableVersionsFile(cache_dir)
 	const concrete_version = getVersionFromSpecifier(available_versions, node_version)
 
-	return await provideConcreteVersion(cache_dir, concrete_version)
+	return {
+		binary: await provideConcreteVersion(cache_dir, concrete_version),
+		concrete_version
+	}
 }

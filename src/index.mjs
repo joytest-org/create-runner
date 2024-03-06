@@ -44,7 +44,16 @@ export default async function createRunner(type, options) {
 	runner_master.requestHandler = (request) => {
 		if (request.cmd === "ready") {
 			instance.is_ready = true
-			instance.ready_promise.resolve()
+
+			let dynamic_props = {}
+
+			if ("dynamic_props" in request) {
+				dynamic_props = request.dynamic_props
+			}
+
+			addDynamicProperties(instance, dynamic_props)
+
+			instance.ready_promise.resolve(dynamic_props)
 		} else if (request.cmd === "reportTestResult") {
 			const {result_id, result, error} = request.report
 
