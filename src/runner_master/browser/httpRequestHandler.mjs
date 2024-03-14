@@ -5,17 +5,22 @@ import index_html_code from "includeStaticResource:./client/index.html"
 import index_js_code from "includeStaticResource:../../../dist/runner_master/browser/client/index.mjs"
 import runner_slave_code from "includeStaticResource:../../../dist/runner_slave/index.mjs"
 
+import getMimeType from "@anio-js-foundation/get-mime-type"
+
 export default function(context, request, response) {
 	const {jtest_session} = context
 
 	if (request.url.startsWith("/project_files/")) {
+		const filename = path.basename(request.url)
+		const mime_type = getMimeType(filename)
+
 		let file = fs.readFileSync(
 			path.join(jtest_session.options.project_root, request.url.slice(
 				"/project_files/".length
 			))
 		)
 
-		response.setHeader("Content-Type", "text/javascript")
+		response.setHeader("Content-Type", mime_type)
 		response.write(file)
 		response.end()
 	}

@@ -18,6 +18,7 @@
     "@anio-js-foundation/create-temporary-resource": "^1.0.0",
     "@anio-js-foundation/create-worker": "^1.0.0",
     "@anio-js-foundation/error-object-to-string": "^2.0.0",
+    "@anio-js-foundation/get-mime-type": "^1.0.0",
     "@anio-node-foundation/create-remote-worker": "^1.0.0",
     "@anio-node-foundation/fs-utils": "^2.1.1",
     "@anio-node-foundation/get-nodejs-binaries": "^0.3.0",
