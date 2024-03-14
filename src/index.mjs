@@ -17,7 +17,9 @@ function addDynamicProperties(instance, props) {
 	}
 }
 
-export default async function createRunner(type, options) {
+export default async function createRunner(
+	type, options, reporter = () => {}
+) {
 	if (!["node", "browser"].includes(type)) {
 		throw new Error(`Invalid runner type "${type}".`)
 	}
@@ -72,6 +74,8 @@ export default async function createRunner(type, options) {
 			} else {
 				reject(new Error(`${result}`))
 			}
+		} else if (request.cmd === "reportString") {
+			reporter(request.string)
 		} else {
 			/* unknown request */
 		}

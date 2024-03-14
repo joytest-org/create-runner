@@ -25,14 +25,21 @@ async function updateLocalAvailableVersionsFile(cache_dir) {
 	return JSON.parse(file_contents)
 }
 
-async function provideConcreteVersion(cache_dir, version) {
+async function provideConcreteVersion(
+	cache_dir,
+	version,
+	reportDownloadProgress
+) {
 	const cache_path = path.join(cache_dir, `${version}`, "bin", "node")
 
 	if (await nodeFsUtils.isFile(cache_path)) {
 		return cache_path
 	}
 
-	const tmp = await download(version)
+	const tmp = await download(version, (percentage) => {
+		// add concrete version to progress reporting
+		reportDownloadProgress(version, percentage)
+	})
 
 	await fs.mkdir(path.join(cache_dir, `${version}.tmp`, "bin"), {
 		recursive: true
@@ -51,12 +58,20 @@ async function provideConcreteVersion(cache_dir, version) {
 	return cache_path
 }
 
-export default async function(cache_dir, node_version) {
+export default async function(
+	cache_dir,
+	node_version,
+	reportDownloadProgress
+) {
 	const available_versions = await updateLocalAvailableVersionsFile(cache_dir)
 	const concrete_version = getVersionFromSpecifier(available_versions, node_version)
 
 	return {
-		binary: await provideConcreteVersion(cache_dir, concrete_version),
+		binary: await provideConcreteVersion(
+			cache_dir,
+			concrete_version,
+			reportDownloadProgress
+		),
 		concrete_version
 	}
 }

@@ -6,13 +6,37 @@ let global_workers = new Map()
 
 let node_binary = "node"
 
+let reported_progress = []
+
 async function init(context) {
 	const {sendRequest} = context
 
 	if ("version" in context.options) {
 		setTimeout(async () => {
 			const {binary, concrete_version} = await getConcreteNodeVersion(
-				context.jtest_session.cache_dir, context.options.version
+				context.jtest_session.cache_dir,
+				context.options.version,
+				// download progress reporter
+				(node_version, percentage) => {
+					//
+					// report progress in 25% chunks
+					//
+					let progress = Math.floor((percentage / 100) * 4) * 25
+
+					//
+					// do not report same progress more than once
+					//
+					if (reported_progress.includes(progress)) {
+						return
+					}
+
+					sendRequest({
+						cmd: "reportString",
+						string: `Node ${node_version} download progress at ${progress}%`
+					})
+
+					reported_progress.push(progress)
+				}
 			)
 
 			node_binary = binary
