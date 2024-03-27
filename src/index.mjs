@@ -2,7 +2,9 @@ import createWorker from "@anio-js-foundation/create-worker"
 import createPromise from "@anio-js-foundation/create-promise"
 import createRandomIdentifier from "@anio-js-foundation/create-random-identifier"
 
-import runner_master_code from "includeStaticResource:../dist/runner_master/index.mjs"
+import {loadResource} from "@vipen/target-js"
+
+const runner_master_code = loadResource("esmodule://runner_master.mjs")
 
 /*
 	runner <- ipc -> runner_master <- | http | -> runner_slave [<-> worker]

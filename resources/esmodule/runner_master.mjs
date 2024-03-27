@@ -1,5 +1,5 @@
-import browser_implementation from "../../dist/runner_master/browser/implementation.mjs"
-import node_implementation from "../../dist/runner_master/node/implementation.mjs"
+import browser_implementation from "@joytest/create-browser-runner"
+import node_implementation from "@joytest/create-node-runner"
 
 let context = null
 

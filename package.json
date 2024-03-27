@@ -9,25 +9,22 @@
     "url": "git+https://github.com/joytest-org/create-runner.git"
   },
   "exports": {
-    ".": "./dist/package.mjs",
+    ".": "./build/package.mjs",
     "./package.json": "./package.json"
   },
   "devDependencies": {
     "@anio-js-foundation/create-promise": "^2.0.0",
     "@anio-js-foundation/create-random-identifier": "^2.0.0",
-    "@anio-js-foundation/create-temporary-resource": "^1.0.0",
     "@anio-js-foundation/create-worker": "^1.0.0",
-    "@anio-js-foundation/error-object-to-string": "^2.0.0",
-    "@anio-js-foundation/get-mime-type": "^1.0.0",
-    "@anio-node-foundation/create-remote-worker": "^2.0.0",
-    "@anio-node-foundation/fs-utils": "^3.0.0",
-    "@anio-node-foundation/get-nodejs-binaries": "^1.0.0",
-    "@anio-software/npm-package-bundler": "^1.0.0"
+    "@joytest/create-browser-runner": "^1.0.0",
+    "@joytest/create-node-runner": "^1.0.1",
+    "@vipen/target-js": "^0.10.0",
+    "vipen": "^0.1.0"
   },
   "scripts": {
-    "prepare": "./node_modules/.bin/npm-package-bundler ."
+    "prepare": "./node_modules/.bin/vipen ."
   },
   "files": [
-    "./dist/package.mjs"
+    "./build/package.mjs"
   ]
 }
