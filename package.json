@@ -9,7 +9,7 @@
     "url": "git+https://github.com/joytest-org/create-runner.git"
   },
   "exports": {
-    ".": "./build/package.mjs",
+    ".": "./build/package.min.mjs",
     "./package.json": "./package.json"
   },
   "devDependencies": {
@@ -25,6 +25,7 @@
     "prepare": "./node_modules/.bin/vipen ."
   },
   "files": [
-    "./build/package.mjs"
+    "./build/package.mjs",
+    "./build/package.min.mjs"
   ]
 }
