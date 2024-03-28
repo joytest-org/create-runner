@@ -1,6 +1,6 @@
 {
   "name": "@joytest/create-runner",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Create joytest runner (browser or node).",
   "author": "Anio Software <info@anio.software>",
   "license": "MIT",
